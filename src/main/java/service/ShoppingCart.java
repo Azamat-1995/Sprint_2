@@ -3,7 +3,7 @@ package service;
 import model.Food;
 
 public class ShoppingCart {
-    public Food[] foods;
+    private Food[] foods;
 
     public ShoppingCart(Food[] foods) {
         this.foods = foods;
@@ -11,17 +11,17 @@ public class ShoppingCart {
 
     public double getSumWithoutDiscounts() {
         double fullPrice = 0.0;
-        for (int i = 0; i < foods.length; i++) {
-            fullPrice = fullPrice + foods[i].getAmount() * foods[i].getPrice();
+        for (Food food: foods) {
+            fullPrice += food.getAmount() * food.getPrice();
         }
         return fullPrice;
     }
 
     public double getSumWithDiscounts() {
         double sumWithDiscounts = 0.0;
-        for (int i = 0; i < foods.length; i++) {
-            double fullPrice = foods[i].getAmount() * foods[i].getPrice();
-            int discountPercent = foods[i].getDiscount();
+        for (Food food : foods) {
+            double fullPrice = food.getAmount() * food.getPrice();
+            int discountPercent = food.getDiscount();
             double discountPrice = fullPrice * (1 - discountPercent / 100.0);
             sumWithDiscounts = sumWithDiscounts + discountPrice;
         }
@@ -31,9 +31,9 @@ public class ShoppingCart {
 
     public double getSumIsVegetarian() {
         double sumIsVegetarian = 0.0;
-        for (int i = 0; i < foods.length; i++) {
-            if (foods[i].isVegetarian() == true) {
-                sumIsVegetarian = sumIsVegetarian + foods[i].getAmount() * foods[i].getPrice();
+        for (Food food : foods) {
+            if (food.isVegetarian()) {
+                sumIsVegetarian = sumIsVegetarian + food.getAmount() * food.getPrice();
             }
         }
         return sumIsVegetarian;
